@@ -12,6 +12,8 @@
 
 + (InstagramClient *) sharedInstance;
 
-- (void) searchByCoordinate:(double)latitude longtitude:(double)longtitude completion:(void (^)(NSArray *locations, NSError *error))completion;
+- (void) searchLocationsByCoordinate:(double)latitude longtitude:(double)longtitude completion:(void (^)(NSArray *locations, NSError *error))completion;
+
+- (void) recentMediaOfLocation:(NSInteger)lid completion:(void (^)(NSArray *medias, NSError *error))completion;
 
 @end

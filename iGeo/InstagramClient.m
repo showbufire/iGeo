@@ -8,6 +8,7 @@
 
 #import "InstagramClient.h"
 #import "Location.h"
+#import "IGImage.h"
 
 const NSString *kClientID = @"df74c8bb778b4799aceaf17d684bd30b";
 const NSString *kClientSecret = @"aad6158d2bc147ecbdb5992f0050b41c";
@@ -26,7 +27,7 @@ const NSString *kClientSecret = @"aad6158d2bc147ecbdb5992f0050b41c";
     return instance;
 }
 
-- (void)searchByCoordinate:(double)latitude longtitude:(double)longtitude completion:(void (^)(NSArray *, NSError *))completion {
+- (void)searchLocationsByCoordinate:(double)latitude longtitude:(double)longtitude completion:(void (^)(NSArray *, NSError *))completion {
     NSString *urlStr = [NSString stringWithFormat:@"https://api.instagram.com/v1/locations/search?lat=%lf&lng=%lf&client_id=%@", latitude, longtitude, kClientID];
     NSURL *url = [NSURL URLWithString:urlStr];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
@@ -46,17 +47,25 @@ const NSString *kClientSecret = @"aad6158d2bc147ecbdb5992f0050b41c";
     }];
 }
 
-- (void)testCall {
-    NSString *urlStr = [NSString stringWithFormat:@"https://api.instagram.com/v1/locations/search?lat=48.858844&lng=2.294351&client_id=%@", kClientID];
+- (void) recentMediaOfLocation:(NSInteger)lid completion:(void (^)(NSArray *medias, NSError *error))completion {
+    NSString *urlStr = [NSString stringWithFormat:@"https://api.instagram.com/v1/locations/%ld/media/recent?client_id=%@", lid, kClientID];
     NSURL *url = [NSURL URLWithString:urlStr];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-        if (connectionError == nil) {
-            NSLog(@"%@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-
-        } else {
-            NSLog(@"error %@", connectionError);
+        if (connectionError != nil) {
+            completion(nil, connectionError);
+            return;
         }
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        NSMutableArray *arr = [[NSMutableArray alloc] init];
+        for (NSDictionary *mediaDict in dict[@"data"]) {
+            // only return images for now
+            if ([mediaDict[@"type"]  isEqual: @"image"]) {
+                IGImage *img = [[IGImage alloc] initWithDictionary:mediaDict];
+                [arr addObject:img];
+            }
+        }
+        completion(arr, nil);
     }];
 }
 

@@ -10,6 +10,8 @@
 		13D726CA66A35E193832D646 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2737B23509015E2665674337 /* libPods.a */; };
 		81EA835C1A1927E600032936 /* InstagramClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 81EA835B1A1927E600032936 /* InstagramClient.m */; };
 		81EA83601A1933D600032936 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 81EA835F1A1933D600032936 /* Location.m */; };
+		81EA83631A195BA300032936 /* IGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 81EA83621A195BA300032936 /* IGImage.m */; };
+		81EA83661A195D6F00032936 /* IGUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 81EA83651A195D6F00032936 /* IGUser.m */; };
 		C4CA30A91A18696E00E77FD4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CA30A81A18696E00E77FD4 /* main.m */; };
 		C4CA30AC1A18696E00E77FD4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CA30AB1A18696E00E77FD4 /* AppDelegate.m */; };
 		C4CA30B41A18696E00E77FD4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4CA30B31A18696E00E77FD4 /* Images.xcassets */; };
@@ -37,6 +39,10 @@
 		81EA835B1A1927E600032936 /* InstagramClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstagramClient.m; sourceTree = "<group>"; };
 		81EA835E1A1933D600032936 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
 		81EA835F1A1933D600032936 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
+		81EA83611A195BA200032936 /* IGImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGImage.h; sourceTree = "<group>"; };
+		81EA83621A195BA300032936 /* IGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGImage.m; sourceTree = "<group>"; };
+		81EA83641A195D6F00032936 /* IGUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGUser.h; sourceTree = "<group>"; };
+		81EA83651A195D6F00032936 /* IGUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGUser.m; sourceTree = "<group>"; };
 		C4CA30A31A18696E00E77FD4 /* iGeo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iGeo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4CA30A71A18696E00E77FD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4CA30A81A18696E00E77FD4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -93,6 +99,10 @@
 			children = (
 				81EA835E1A1933D600032936 /* Location.h */,
 				81EA835F1A1933D600032936 /* Location.m */,
+				81EA83611A195BA200032936 /* IGImage.h */,
+				81EA83621A195BA300032936 /* IGImage.m */,
+				81EA83641A195D6F00032936 /* IGUser.h */,
+				81EA83651A195D6F00032936 /* IGUser.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -313,7 +323,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4CA30AC1A18696E00E77FD4 /* AppDelegate.m in Sources */,
+				81EA83631A195BA300032936 /* IGImage.m in Sources */,
 				81EA83601A1933D600032936 /* Location.m in Sources */,
+				81EA83661A195D6F00032936 /* IGUser.m in Sources */,
 				81EA835C1A1927E600032936 /* InstagramClient.m in Sources */,
 				C4CA30A91A18696E00E77FD4 /* main.m in Sources */,
 				C4CA30D01A186A9200E77FD4 /* MainViewController.m in Sources */,

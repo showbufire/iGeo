@@ -10,10 +10,10 @@
 
 @interface Location : NSObject
 
-@property NSInteger lid;
-@property double latitude;
-@property double longtitude;
-@property NSString *name;
+@property (nonatomic) NSInteger lid;
+@property (nonatomic) double latitude;
+@property (nonatomic) double longtitude;
+@property (nonatomic, strong) NSString *name;
 
 - (Location *) initWithDictionary:(NSDictionary *)dict;
 
