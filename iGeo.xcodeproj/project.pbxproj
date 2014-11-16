@@ -14,6 +14,8 @@
 		C4CA30B41A18696E00E77FD4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4CA30B31A18696E00E77FD4 /* Images.xcassets */; };
 		C4CA30B71A18696E00E77FD4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4CA30B51A18696E00E77FD4 /* LaunchScreen.xib */; };
 		C4CA30C31A18696E00E77FD4 /* iGeoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CA30C21A18696E00E77FD4 /* iGeoTests.m */; };
+		C4CA30D01A186A9200E77FD4 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CA30CE1A186A9200E77FD4 /* MainViewController.m */; };
+		C4CA30D11A186A9200E77FD4 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4CA30CF1A186A9200E77FD4 /* MainViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,9 @@
 		C4CA30BC1A18696E00E77FD4 /* iGeoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iGeoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4CA30C11A18696E00E77FD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4CA30C21A18696E00E77FD4 /* iGeoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = iGeoTests.m; sourceTree = "<group>"; };
+		C4CA30CD1A186A9200E77FD4 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		C4CA30CE1A186A9200E77FD4 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		C4CA30CF1A186A9200E77FD4 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +86,7 @@
 		C4CA30A51A18696E00E77FD4 /* iGeo */ = {
 			isa = PBXGroup;
 			children = (
+				C4CA30CC1A186A6300E77FD4 /* Classes */,
 				C4CA30AA1A18696E00E77FD4 /* AppDelegate.h */,
 				C4CA30AB1A18696E00E77FD4 /* AppDelegate.m */,
 				C4CA30AD1A18696E00E77FD4 /* ViewController.h */,
@@ -117,6 +123,16 @@
 				C4CA30C11A18696E00E77FD4 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C4CA30CC1A186A6300E77FD4 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C4CA30CD1A186A9200E77FD4 /* MainViewController.h */,
+				C4CA30CE1A186A9200E77FD4 /* MainViewController.m */,
+				C4CA30CF1A186A9200E77FD4 /* MainViewController.xib */,
+			);
+			name = Classes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,6 +218,7 @@
 				C4CA30B21A18696E00E77FD4 /* Main.storyboard in Resources */,
 				C4CA30B71A18696E00E77FD4 /* LaunchScreen.xib in Resources */,
 				C4CA30B41A18696E00E77FD4 /* Images.xcassets in Resources */,
+				C4CA30D11A186A9200E77FD4 /* MainViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,6 +239,7 @@
 				C4CA30AF1A18696E00E77FD4 /* ViewController.m in Sources */,
 				C4CA30AC1A18696E00E77FD4 /* AppDelegate.m in Sources */,
 				C4CA30A91A18696E00E77FD4 /* main.m in Sources */,
+				C4CA30D01A186A9200E77FD4 /* MainViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
