@@ -19,6 +19,8 @@
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property(nonatomic, retain) CLLocationManager *locationManager;
+@property(nonatomic, strong) MKPinAnnotationView *selectedView;
+@property(nonatomic, strong) NSArray *mediaToShow;
 
 @end
 
@@ -34,7 +36,7 @@
     [[InstagramClient sharedInstance] searchLocationsByCoordinate:48.858844 longtitude:2.294351 completion:^(NSArray *locations, NSError *error) {
         if (error == nil) {
             NSLog(@"Successfully got the locations %@ ", locations);
-                      
+            
             for (Location *location in locations) {
                 // Add an annotation for each location
                 CLLocationCoordinate2D point;
@@ -80,27 +82,27 @@
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     /*
-    NSLog(@"didUpdateUserLocation");
-    //MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 80, 80);
-    //[self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
-    
-    // Add an annotation
-    Annotation *point = [[Annotation alloc] init];
-    point.coordinate = userLocation.coordinate;
-    point.title = @"Where am I?";
-    point.subtitle = @"I'm here!!!";
-    [self.mapView addAnnotation:point];
-    
-    CLLocationCoordinate2D point3;
-    point3.latitude = point.coordinate.latitude + 10;
-    point3.longitude = point.coordinate.longitude + 10;
-    Annotation *point2 = [[Annotation alloc] init];
-    point2.title = @"Where am I 2?";
-    point2.subtitle = @"I'm here!!!";
-    point2.coordinate = point3;
-    [self.mapView addAnnotation:point2];
-    
-    [self zoomMapViewToFitAnnotations:self.mapView animated:YES];
+     NSLog(@"didUpdateUserLocation");
+     //MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 80, 80);
+     //[self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
+     
+     // Add an annotation
+     Annotation *point = [[Annotation alloc] init];
+     point.coordinate = userLocation.coordinate;
+     point.title = @"Where am I?";
+     point.subtitle = @"I'm here!!!";
+     [self.mapView addAnnotation:point];
+     
+     CLLocationCoordinate2D point3;
+     point3.latitude = point.coordinate.latitude + 10;
+     point3.longitude = point.coordinate.longitude + 10;
+     Annotation *point2 = [[Annotation alloc] init];
+     point2.title = @"Where am I 2?";
+     point2.subtitle = @"I'm here!!!";
+     point2.coordinate = point3;
+     [self.mapView addAnnotation:point2];
+     
+     [self zoomMapViewToFitAnnotations:self.mapView animated:YES];
      */
 }
 
@@ -150,7 +152,6 @@
         return pinView;
     }
     return nil;
-    
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view NS_AVAILABLE(10_9, 4_0) {
@@ -168,6 +169,24 @@
     if ([an isKindOfClass:[Annotation class]])
     {
         NSLog(@"Location %@ got selected", an.location.name);
+        self.selectedView = (MKPinAnnotationView *)view;
+        
+        [[InstagramClient sharedInstance] recentMediaOfLocation:an.location.lid completion:^(NSArray *media, NSError *error) {
+            if (error == nil) {
+                NSLog(@"Successfully got media for location %ld", an.location.lid);
+                
+                if (media.count > 0) {
+                    self.mediaToShow = media;
+                } else {
+                    self.selectedView.rightCalloutAccessoryView.hidden = YES;
+                }
+                
+                NSLog(@"selected media: %@", media);
+                
+            } else {
+                NSLog(@"Could not get media for location %ld", an.location.lid);
+            }
+        }];
     }
     
 }
@@ -223,21 +242,10 @@
     UIButton *button = (UIButton *)sender;
     NSLog(@"showDetails tag: %ld", button.tag);
     
-    [[InstagramClient sharedInstance] recentMediaOfLocation:button.tag completion:^(NSArray *media, NSError *error) {
-        if (error == nil) {
-            NSLog(@"Successfully got media for location %ld", button.tag);
-            
-            LocationDetailViewController *ldvc = [[LocationDetailViewController alloc] init];
-            UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:ldvc];
-            ldvc.medias = media;
-            [self presentViewController:nvc animated:YES completion:nil];
-            
-            NSLog(@"selected media: %@", media);
-            
-        } else {
-            NSLog(@"Could not get media for location %ld", button.tag);
-        }
-    }];
+    LocationDetailViewController *ldvc = [[LocationDetailViewController alloc] init];
+    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:ldvc];
+    ldvc.medias = self.mediaToShow;
+    [self presentViewController:nvc animated:YES completion:nil];
 }
 
 /*
