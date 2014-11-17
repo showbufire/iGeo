@@ -23,6 +23,12 @@
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"IGImageCellView" bundle:nil] forCellReuseIdentifier:@"IGImageCellView"];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
+    
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(onBackButton)];
+}
+
+- (void) onBackButton {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
