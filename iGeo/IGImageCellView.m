@@ -8,6 +8,7 @@
 
 #import "IGImageCellView.h"
 #import <UIImageView+AFNetworking.h>
+#import <NSDate+DateTools.h>
 
 @interface IGImageCellView ()
 
@@ -28,7 +29,8 @@
     self.igImage = igImage;
     [self.userProfileImageView setImageWithURL:[self.igImage.user profileImageURL]];
     self.usernameLabel.text = self.igImage.user.username;
-    self.timestampLabel.text = @"2h";
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.igImage.createdTime];
+    self.timestampLabel.text = date.timeAgoSinceNow;
     [self.imgView setImageWithURL:self.igImage.imageURL];
 }
 
