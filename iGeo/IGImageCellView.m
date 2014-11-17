@@ -27,7 +27,12 @@
 
 - (void)updateImage:(IGImage *)igImage {
     self.igImage = igImage;
+    
     [self.userProfileImageView setImageWithURL:[self.igImage.user profileImageURL]];
+    CALayer * l = [self.userProfileImageView layer];
+    [l setMasksToBounds:YES];
+    [l setCornerRadius:25.0];
+    
     self.usernameLabel.text = self.igImage.user.username;
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.igImage.createdTime];
     self.timestampLabel.text = date.timeAgoSinceNow;
