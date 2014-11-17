@@ -15,12 +15,15 @@
 #import "IGImage.h"
 #import "LocationDetailViewController.h"
 
-@interface MainViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
+@interface MainViewController () <MKMapViewDelegate, CLLocationManagerDelegate, UIPageViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
 @property(nonatomic, retain) CLLocationManager *locationManager;
 @property(nonatomic, strong) MKPinAnnotationView *selectedView;
 @property(nonatomic, strong) NSArray *mediaToShow;
+@property(nonatomic, assign) MKCoordinateRegion currentRegion;
+
+- (void) addPins:(float)latitute longitude:(float)longitude adjustView:(BOOL)adjustView;
 
 @end
 
@@ -32,13 +35,22 @@
     [self setupMapView];
     
     //lat=48.858844&lng=2.294351
-    
-    [[InstagramClient sharedInstance] searchLocationsByCoordinate:48.858844 longtitude:2.294351 completion:^(NSArray *locations, NSError *error) {
+    [self addPins:48.858844 longitude:2.294351 adjustView:YES];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void) addPins:(float)latitute longitude:(float)longitude adjustView:(BOOL)adjustView {
+    [[InstagramClient sharedInstance] searchLocationsByCoordinate:latitute longtitude:longitude completion:^(NSArray *locations, NSError *error) {
         if (error == nil) {
             NSLog(@"Successfully got the locations %@ ", locations);
             
             for (Location *location in locations) {
                 // Add an annotation for each location
+                NSLog(@"%@ %f %f", location.name, location.latitude, location.longtitude);
                 CLLocationCoordinate2D point;
                 point.latitude = location.latitude;
                 point.longitude = location.longtitude;
@@ -47,18 +59,15 @@
                 an.title = location.name;
                 an.location = location;
                 [self.mapView addAnnotation:an];
+                if (adjustView) {
+                    [self zoomMapViewToFitAnnotations:self.mapView animated:YES];
+                    self.currentRegion = [self.mapView region];
+                }
             }
-            [self zoomMapViewToFitAnnotations:self.mapView animated:YES];
         } else {
             NSLog(@"Could not get locations %@", error);
         }
     }];
-    
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (void)setupMapView {
@@ -109,7 +118,7 @@
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
 {
     Annotation *an = (Annotation *)annotation;
-    NSLog(@"title: %f", an.coordinate.latitude);
+    //NSLog(@"title: %f", an.coordinate.latitude);
     // If the annotation is the user location, just return nil.
     
     if ([annotation isKindOfClass:[MKUserLocation class]])
@@ -191,6 +200,28 @@
     
 }
 
+- (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
+    MKCoordinateRegion region = [self.mapView region];
+    
+    /*
+    CLLocationCoordinate2D oldCenter = self.currentRegion.center;
+    CLLocationCoordinate2D newCenter = region.center;
+    
+    //get latitude in meters
+    CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:(oldCenter.latitude - self.currentRegion.span.latitudeDelta * 0.5) longitude:oldCenter.longitude];
+    CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:(oldCenter.latitude + self.currentRegion.span.latitudeDelta * 0.5) longitude:oldCenter.longitude];
+    int metersLatitude = [loc1 distanceFromLocation:loc2];
+    int distance = [oldCenter       distanceFromLocation:newCenter];
+    
+    //if (abs(oldCenter.latitude - newCenter.latitude) > region.span.)
+     
+    */
+    
+    [self addPins:region.center.latitude longitude:region.center.longitude adjustView:NO];
+    
+    self.currentRegion = [self.mapView region];
+}
+
 #define MINIMUM_ZOOM_ARC 0.014 //approximately 1 miles (1 degree of arc ~= 69 miles)
 #define ANNOTATION_REGION_PAD_FACTOR 1.15
 #define MAX_DEGREES_ARC 360
@@ -199,7 +230,10 @@
 {
     NSArray *annotations = mapView.annotations;
     NSUInteger count = [mapView.annotations count];
+    NSLog(@"#annotations: %ld", count);
     if ( count == 0) { return; } //bail if no annotations
+    
+    
     
     //convert NSArray of id <MKAnnotation> into an MKCoordinateRegion that can be used to set the map size
     //can't use NSArray with MKMapPoint because MKMapPoint is not an id
@@ -246,6 +280,15 @@
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:ldvc];
     ldvc.medias = self.mediaToShow;
     [self presentViewController:nvc animated:YES completion:nil];
+}
+
+- (void)handleDrag:(UIPanGestureRecognizer *)gestureRecognizer {
+    
+    NSLog(@"handleDrag got called");
+    if (gestureRecognizer.state != UIGestureRecognizerStateEnded)
+        return;
+    
+    
 }
 
 /*
