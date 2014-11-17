@@ -12,6 +12,10 @@
 		81EA83601A1933D600032936 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 81EA835F1A1933D600032936 /* Location.m */; };
 		81EA83631A195BA300032936 /* IGImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 81EA83621A195BA300032936 /* IGImage.m */; };
 		81EA83661A195D6F00032936 /* IGUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 81EA83651A195D6F00032936 /* IGUser.m */; };
+		81EA836A1A1972AA00032936 /* LocationDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81EA83681A1972AA00032936 /* LocationDetailViewController.m */; };
+		81EA836B1A1972AA00032936 /* LocationDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81EA83691A1972AA00032936 /* LocationDetailViewController.xib */; };
+		81EA83701A197DC900032936 /* IGImageCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 81EA836E1A197DC900032936 /* IGImageCellView.m */; };
+		81EA83711A197DC900032936 /* IGImageCellView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81EA836F1A197DC900032936 /* IGImageCellView.xib */; };
 		C4CA30A91A18696E00E77FD4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CA30A81A18696E00E77FD4 /* main.m */; };
 		C4CA30AC1A18696E00E77FD4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CA30AB1A18696E00E77FD4 /* AppDelegate.m */; };
 		C4CA30B41A18696E00E77FD4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C4CA30B31A18696E00E77FD4 /* Images.xcassets */; };
@@ -43,6 +47,12 @@
 		81EA83621A195BA300032936 /* IGImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGImage.m; sourceTree = "<group>"; };
 		81EA83641A195D6F00032936 /* IGUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGUser.h; sourceTree = "<group>"; };
 		81EA83651A195D6F00032936 /* IGUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGUser.m; sourceTree = "<group>"; };
+		81EA83671A1972AA00032936 /* LocationDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocationDetailViewController.h; sourceTree = "<group>"; };
+		81EA83681A1972AA00032936 /* LocationDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocationDetailViewController.m; sourceTree = "<group>"; };
+		81EA83691A1972AA00032936 /* LocationDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LocationDetailViewController.xib; sourceTree = "<group>"; };
+		81EA836D1A197DC900032936 /* IGImageCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IGImageCellView.h; sourceTree = "<group>"; };
+		81EA836E1A197DC900032936 /* IGImageCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IGImageCellView.m; sourceTree = "<group>"; };
+		81EA836F1A197DC900032936 /* IGImageCellView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = IGImageCellView.xib; sourceTree = "<group>"; };
 		C4CA30A31A18696E00E77FD4 /* iGeo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iGeo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4CA30A71A18696E00E77FD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C4CA30A81A18696E00E77FD4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -107,6 +117,16 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		81EA836C1A197D7100032936 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				81EA836D1A197DC900032936 /* IGImageCellView.h */,
+				81EA836E1A197DC900032936 /* IGImageCellView.m */,
+				81EA836F1A197DC900032936 /* IGImageCellView.xib */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
 		C4CA309A1A18696E00E77FD4 = {
 			isa = PBXGroup;
 			children = (
@@ -130,6 +150,7 @@
 		C4CA30A51A18696E00E77FD4 /* iGeo */ = {
 			isa = PBXGroup;
 			children = (
+				81EA836C1A197D7100032936 /* View */,
 				81EA835D1A1933A900032936 /* Model */,
 				81EA83551A19261600032936 /* API */,
 				C4CA30CC1A186A6300E77FD4 /* Classes */,
@@ -174,6 +195,9 @@
 				C4CA30CD1A186A9200E77FD4 /* MainViewController.h */,
 				C4CA30CE1A186A9200E77FD4 /* MainViewController.m */,
 				C4CA30CF1A186A9200E77FD4 /* MainViewController.xib */,
+				81EA83671A1972AA00032936 /* LocationDetailViewController.h */,
+				81EA83681A1972AA00032936 /* LocationDetailViewController.m */,
+				81EA83691A1972AA00032936 /* LocationDetailViewController.xib */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -269,6 +293,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				81EA836B1A1972AA00032936 /* LocationDetailViewController.xib in Resources */,
+				81EA83711A197DC900032936 /* IGImageCellView.xib in Resources */,
 				C4CA30B71A18696E00E77FD4 /* LaunchScreen.xib in Resources */,
 				C4CA30B41A18696E00E77FD4 /* Images.xcassets in Resources */,
 				C4CA30D11A186A9200E77FD4 /* MainViewController.xib in Resources */,
@@ -324,8 +350,10 @@
 			files = (
 				C4CA30AC1A18696E00E77FD4 /* AppDelegate.m in Sources */,
 				81EA83631A195BA300032936 /* IGImage.m in Sources */,
+				81EA83701A197DC900032936 /* IGImageCellView.m in Sources */,
 				81EA83601A1933D600032936 /* Location.m in Sources */,
 				81EA83661A195D6F00032936 /* IGUser.m in Sources */,
+				81EA836A1A1972AA00032936 /* LocationDetailViewController.m in Sources */,
 				81EA835C1A1927E600032936 /* InstagramClient.m in Sources */,
 				C4CA30A91A18696E00E77FD4 /* main.m in Sources */,
 				C4CA30D01A186A9200E77FD4 /* MainViewController.m in Sources */,
