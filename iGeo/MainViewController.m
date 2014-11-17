@@ -13,6 +13,7 @@
 #import "InstagramClient.h"
 #import "Location.h"
 #import "IGImage.h"
+#import "LocationDetailViewController.h"
 
 @interface MainViewController () <MKMapViewDelegate, CLLocationManagerDelegate>
 
@@ -159,8 +160,9 @@
     
     // If the annotation is the user location, do nothing.
     
-    if ([an isKindOfClass:[MKUserLocation class]])
+    if ([an isKindOfClass:[MKUserLocation class]]) {
         return;
+    }
     
     // Handle any custom annotations.
     if ([an isKindOfClass:[Annotation class]])
@@ -169,6 +171,11 @@
         [[InstagramClient sharedInstance] recentMediaOfLocation:an.location.lid completion:^(NSArray *media, NSError *error) {
             if (error == nil) {
                 NSLog(@"Successfully got media for location %ld", an.location.lid);
+                
+                LocationDetailViewController *ldvc = [[LocationDetailViewController alloc] init];
+                UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:ldvc];
+                ldvc.medias = media;
+                [self presentViewController:nvc animated:YES completion:nil];
                 
                 NSLog(@"selected media: %@", media);
                 
