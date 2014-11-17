@@ -158,7 +158,7 @@
 				81EA836C1A197D7100032936 /* View */,
 				81EA835D1A1933A900032936 /* Model */,
 				81EA83551A19261600032936 /* API */,
-				C4CA30CC1A186A6300E77FD4 /* Classes */,
+				C4CA30CC1A186A6300E77FD4 /* Controller */,
 				C4CA30AA1A18696E00E77FD4 /* AppDelegate.h */,
 				C4CA30AB1A18696E00E77FD4 /* AppDelegate.m */,
 				C4CA30B31A18696E00E77FD4 /* Images.xcassets */,
@@ -194,7 +194,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		C4CA30CC1A186A6300E77FD4 /* Classes */ = {
+		C4CA30CC1A186A6300E77FD4 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				C4CA30CD1A186A9200E77FD4 /* MainViewController.h */,
@@ -204,7 +204,7 @@
 				81EA83681A1972AA00032936 /* LocationDetailViewController.m */,
 				81EA83691A1972AA00032936 /* LocationDetailViewController.xib */,
 			);
-			name = Classes;
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		FAD1F1B9F41B47BB3B15160B /* Pods */ = {
