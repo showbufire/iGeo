@@ -18,4 +18,7 @@
 
 - (IGImage *) initWithDictionary:(NSDictionary *)dict;
 
++ (NSArray *) igImagesWithArray:(NSArray *)array;
+
+
 @end

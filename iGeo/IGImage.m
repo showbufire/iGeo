@@ -21,4 +21,14 @@
     return self;
 }
 
++ (NSArray *) igImagesWithArray:(NSArray *)array {
+    NSMutableArray *igImages = [NSMutableArray array];
+    
+    for (NSDictionary *dictionary in array) {
+        [igImages addObject:[[IGImage alloc] initWithDictionary:dictionary]];
+    }
+    return igImages;
+}
+
+
 @end

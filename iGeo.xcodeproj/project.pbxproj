@@ -19,6 +19,7 @@
 		C4CA30C31A18696E00E77FD4 /* iGeoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CA30C21A18696E00E77FD4 /* iGeoTests.m */; };
 		C4CA30D01A186A9200E77FD4 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CA30CE1A186A9200E77FD4 /* MainViewController.m */; };
 		C4CA30D11A186A9200E77FD4 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4CA30CF1A186A9200E77FD4 /* MainViewController.xib */; };
+		C4CA30DE1A197C9900E77FD4 /* Annotation.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CA30DD1A197C9900E77FD4 /* Annotation.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,8 @@
 		C4CA30CD1A186A9200E77FD4 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		C4CA30CE1A186A9200E77FD4 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		C4CA30CF1A186A9200E77FD4 /* MainViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
+		C4CA30DC1A197C9900E77FD4 /* Annotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Annotation.h; sourceTree = "<group>"; };
+		C4CA30DD1A197C9900E77FD4 /* Annotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Annotation.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +106,8 @@
 				81EA83621A195BA300032936 /* IGImage.m */,
 				81EA83641A195D6F00032936 /* IGUser.h */,
 				81EA83651A195D6F00032936 /* IGUser.m */,
+				C4CA30DC1A197C9900E77FD4 /* Annotation.h */,
+				C4CA30DD1A197C9900E77FD4 /* Annotation.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -324,6 +329,7 @@
 			files = (
 				C4CA30AC1A18696E00E77FD4 /* AppDelegate.m in Sources */,
 				81EA83631A195BA300032936 /* IGImage.m in Sources */,
+				C4CA30DE1A197C9900E77FD4 /* Annotation.m in Sources */,
 				81EA83601A1933D600032936 /* Location.m in Sources */,
 				81EA83661A195D6F00032936 /* IGUser.m in Sources */,
 				81EA835C1A1927E600032936 /* InstagramClient.m in Sources */,

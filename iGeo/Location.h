@@ -17,4 +17,6 @@
 
 - (Location *) initWithDictionary:(NSDictionary *)dict;
 
++ (NSArray *) locationsWithArray:(NSArray *)array;
+
 @end

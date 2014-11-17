@@ -28,7 +28,7 @@ const NSString *kClientSecret = @"aad6158d2bc147ecbdb5992f0050b41c";
 }
 
 - (void)searchLocationsByCoordinate:(double)latitude longtitude:(double)longtitude completion:(void (^)(NSArray *, NSError *))completion {
-    NSString *urlStr = [NSString stringWithFormat:@"https://api.instagram.com/v1/locations/search?lat=%lf&lng=%lf&client_id=%@", latitude, longtitude, kClientID];
+    NSString *urlStr = [NSString stringWithFormat:@"https://api.instagram.com/v1/locations/search?lat=%lf&lng=%lf&distance=1000&client_id=%@", latitude, longtitude, kClientID];
     NSURL *url = [NSURL URLWithString:urlStr];
     NSURLRequest *request = [[NSURLRequest alloc] initWithURL:url];
     [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
