@@ -48,7 +48,7 @@
             }
             [self zoomMapViewToFitAnnotations:self.mapView animated:YES];
         } else {
-            NSLog(@"Could not get locations");
+            NSLog(@"Could not get locations %@", error);
         }
     }];
     
@@ -136,7 +136,7 @@
         
         // Because this is an iOS app, add the detail disclosure button to display details about the annotation in another view.
         UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-        rightButton.tag = 5;
+        rightButton.tag = an.location.lid;
         [rightButton addTarget:self action:@selector(showDetails:) forControlEvents:UIControlEventTouchUpInside];
         pinView.rightCalloutAccessoryView = rightButton;
         
@@ -167,22 +167,7 @@
     // Handle any custom annotations.
     if ([an isKindOfClass:[Annotation class]])
     {
-        
-        [[InstagramClient sharedInstance] recentMediaOfLocation:an.location.lid completion:^(NSArray *media, NSError *error) {
-            if (error == nil) {
-                NSLog(@"Successfully got media for location %ld", an.location.lid);
-                
-                LocationDetailViewController *ldvc = [[LocationDetailViewController alloc] init];
-                UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:ldvc];
-                ldvc.medias = media;
-                [self presentViewController:nvc animated:YES completion:nil];
-                
-                NSLog(@"selected media: %@", media);
-                
-            } else {
-                NSLog(@"Could not get media for location %ld", an.location.lid);
-            }
-        }];
+        NSLog(@"Location %@ got selected", an.location.name);
     }
     
 }
@@ -237,6 +222,22 @@
 - (void)showDetails:(id)sender {
     UIButton *button = (UIButton *)sender;
     NSLog(@"showDetails tag: %ld", button.tag);
+    
+    [[InstagramClient sharedInstance] recentMediaOfLocation:button.tag completion:^(NSArray *media, NSError *error) {
+        if (error == nil) {
+            NSLog(@"Successfully got media for location %ld", button.tag);
+            
+            LocationDetailViewController *ldvc = [[LocationDetailViewController alloc] init];
+            UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:ldvc];
+            ldvc.medias = media;
+            [self presentViewController:nvc animated:YES completion:nil];
+            
+            NSLog(@"selected media: %@", media);
+            
+        } else {
+            NSLog(@"Could not get media for location %ld", button.tag);
+        }
+    }];
 }
 
 /*
