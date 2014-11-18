@@ -103,7 +103,9 @@
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
     [self removeAllPinsButUserLocation];
-    [self addPins:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude adjustView:YES];
+    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 80, 80);
+    [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
+    //[self addPins:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude adjustView:YES];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
