@@ -35,7 +35,7 @@
     [self setupMapView];
     
     //lat=48.858844&lng=2.294351
-    [self addPins:48.858844 longitude:2.294351 adjustView:YES];
+    //[self addPins:48.858844 longitude:2.294351 adjustView:YES];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -59,15 +59,26 @@
                 an.title = location.name;
                 an.location = location;
                 [self.mapView addAnnotation:an];
-                if (adjustView) {
-                    [self zoomMapViewToFitAnnotations:self.mapView animated:YES];
-                    self.currentRegion = [self.mapView region];
-                }
+            }
+            if (adjustView) {
+                [self zoomMapViewToFitAnnotations:self.mapView animated:YES];
+                self.currentRegion = [self.mapView region];
             }
         } else {
             NSLog(@"Could not get locations %@", error);
         }
     }];
+}
+
+- (void)removeAllPinsButUserLocation
+{
+    id userLocation = [self.mapView userLocation];
+    NSMutableArray *pins = [[NSMutableArray alloc] initWithArray:[self.mapView annotations]];
+    if ( userLocation != nil ) {
+        [pins removeObject:userLocation]; // avoid removing user location off the map
+    }
+    
+    [self.mapView removeAnnotations:pins];
 }
 
 - (void)setupMapView {
@@ -90,29 +101,8 @@
 #pragma mark - map view delegates
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    /*
-     NSLog(@"didUpdateUserLocation");
-     //MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 80, 80);
-     //[self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
-     
-     // Add an annotation
-     Annotation *point = [[Annotation alloc] init];
-     point.coordinate = userLocation.coordinate;
-     point.title = @"Where am I?";
-     point.subtitle = @"I'm here!!!";
-     [self.mapView addAnnotation:point];
-     
-     CLLocationCoordinate2D point3;
-     point3.latitude = point.coordinate.latitude + 10;
-     point3.longitude = point.coordinate.longitude + 10;
-     Annotation *point2 = [[Annotation alloc] init];
-     point2.title = @"Where am I 2?";
-     point2.subtitle = @"I'm here!!!";
-     point2.coordinate = point3;
-     [self.mapView addAnnotation:point2];
-     
-     [self zoomMapViewToFitAnnotations:self.mapView animated:YES];
-     */
+    [self removeAllPinsButUserLocation];
+    [self addPins:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude adjustView:YES];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
@@ -136,7 +126,7 @@
             // If an existing pin view was not available, create one.
             pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationView"];
             pinView.pinColor = MKPinAnnotationColorRed;
-            pinView.animatesDrop = YES;
+            pinView.animatesDrop = NO;
             pinView.canShowCallout = YES;
             
             // If appropriate, customize the callout by adding accessory views (code not shown).
@@ -161,6 +151,27 @@
         return pinView;
     }
     return nil;
+}
+
+- (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)annotationViews
+{
+    NSLog(@"didAddAnnotationViews");
+    NSTimeInterval delayInterval = 0;
+    
+    for (MKAnnotationView *annView in annotationViews)
+    {
+        CGRect endFrame = annView.frame;
+        
+        annView.frame = CGRectOffset(endFrame, 0, -500);
+        
+        [UIView animateWithDuration:0.8
+                              delay:delayInterval
+                            options:UIViewAnimationOptionAllowUserInteraction
+                         animations:^{ annView.frame = endFrame; }
+                         completion:NULL];
+        
+        delayInterval += 0.3;
+    }
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view NS_AVAILABLE(10_9, 4_0) {
