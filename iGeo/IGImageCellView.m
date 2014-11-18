@@ -36,7 +36,22 @@
     self.usernameLabel.text = self.igImage.user.username;
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.igImage.createdTime];
     self.timestampLabel.text = date.timeAgoSinceNow;
-    [self.imgView setImageWithURL:self.igImage.imageURL];
+
+    UIImage *placeholder = [self getPlaceholderImage];
+    [self.imgView setImageWithURL:self.igImage.imageURL placeholderImage:placeholder];
+}
+
+- (UIImage *)getPlaceholderImage {
+    UIImage *whiteImage = [UIImage imageNamed:@"white.png"];
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat newWidth = MIN(self.igImage.imageWidth, screenRect.size.width);
+    CGFloat newHeight = self.igImage.imageHeight / self.igImage.imageWidth * newWidth;
+    CGSize newSize = CGSizeMake(newWidth, newHeight);
+    UIGraphicsBeginImageContext(newSize);
+    [whiteImage drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return newImage;
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
