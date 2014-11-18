@@ -203,21 +203,17 @@
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
     MKCoordinateRegion region = [self.mapView region];
     
-    /*
-    CLLocationCoordinate2D oldCenter = self.currentRegion.center;
-    CLLocationCoordinate2D newCenter = region.center;
     
-    //get latitude in meters
-    CLLocation *loc1 = [[CLLocation alloc] initWithLatitude:(oldCenter.latitude - self.currentRegion.span.latitudeDelta * 0.5) longitude:oldCenter.longitude];
-    CLLocation *loc2 = [[CLLocation alloc] initWithLatitude:(oldCenter.latitude + self.currentRegion.span.latitudeDelta * 0.5) longitude:oldCenter.longitude];
-    int metersLatitude = [loc1 distanceFromLocation:loc2];
-    int distance = [oldCenter       distanceFromLocation:newCenter];
+    CLLocation *oldCenter = [[CLLocation alloc] initWithLatitude:self.currentRegion.center.latitude longitude:self.currentRegion.center.longitude];
+    CLLocation *newCenter = [[CLLocation alloc] initWithLatitude:region.center.latitude longitude:region.center.longitude];
     
-    //if (abs(oldCenter.latitude - newCenter.latitude) > region.span.)
-     
-    */
-    
-    [self addPins:region.center.latitude longitude:region.center.longitude adjustView:NO];
+    //NSLog(@"%f %f %f %f", fabs(oldCenter.coordinate.latitude - newCenter.coordinate.latitude), region.span.latitudeDelta / 2, fabsf(oldCenter.coordinate.longitude - newCenter.coordinate.longitude), region.span.longitudeDelta / 2);
+    if (fabsf(oldCenter.coordinate.latitude - newCenter.coordinate.latitude) > region.span.latitudeDelta / 4 || fabsf(oldCenter.coordinate.longitude - newCenter.coordinate.longitude) > region.span.longitudeDelta / 4) {
+        NSLog(@"Center moved enough");
+        [self addPins:region.center.latitude longitude:region.center.longitude adjustView:NO];
+    } else {
+        NSLog(@"Center did not move enough");
+    }
     
     self.currentRegion = [self.mapView region];
 }
