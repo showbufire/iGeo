@@ -12,5 +12,6 @@
 @interface LocationDetailViewController : UIViewController<UITableViewDataSource>
 
 @property (nonatomic, strong) NSArray *medias;
+@property (nonatomic, strong) NSString *locationName;
 
 @end

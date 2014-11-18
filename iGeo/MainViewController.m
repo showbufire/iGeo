@@ -21,6 +21,7 @@
 @property(nonatomic, retain) CLLocationManager *locationManager;
 @property(nonatomic, strong) MKPinAnnotationView *selectedView;
 @property(nonatomic, strong) NSArray *mediaToShow;
+@property(nonatomic, strong) Location *selectedLocation;
 @property(nonatomic, assign) MKCoordinateRegion currentRegion;
 
 - (void) addPins:(float)latitute longitude:(float)longitude adjustView:(BOOL)adjustView;
@@ -197,6 +198,7 @@
                 
                 if (media.count > 0) {
                     self.mediaToShow = media;
+                    self.selectedLocation = an.location;
                 } else {
                     self.selectedView.rightCalloutAccessoryView.hidden = YES;
                 }
@@ -286,6 +288,7 @@
     LocationDetailViewController *ldvc = [[LocationDetailViewController alloc] init];
     UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:ldvc];
     ldvc.medias = self.mediaToShow;
+    ldvc.locationName = self.selectedLocation.name;
     [self presentViewController:nvc animated:YES completion:nil];
 }
 

@@ -20,6 +20,8 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    self.navigationItem.title = self.locationName;
+    
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"IGImageCellView" bundle:nil] forCellReuseIdentifier:@"IGImageCellView"];
     self.tableView.rowHeight = UITableViewAutomaticDimension;
