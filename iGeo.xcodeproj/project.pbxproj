@@ -277,9 +277,11 @@
 				TargetAttributes = {
 					C4CA30A21A18696E00E77FD4 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = XCT4LWZW8C;
 					};
 					C4CA30BB1A18696E00E77FD4 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = XCT4LWZW8C;
 						TestTargetID = C4CA30A21A18696E00E77FD4;
 					};
 				};
@@ -512,6 +514,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -523,6 +527,7 @@
 				INFOPLIST_FILE = iGeoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iGeo.app/iGeo";
 			};
 			name = Debug;
@@ -531,6 +536,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -538,6 +545,7 @@
 				INFOPLIST_FILE = iGeoTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/iGeo.app/iGeo";
 			};
 			name = Release;
