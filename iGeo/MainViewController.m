@@ -28,6 +28,7 @@
 @property(nonatomic, strong) GrowView *growView;
 @property(nonatomic) CGPoint panStartingLocation;
 @property (weak, nonatomic) IBOutlet UILabel *locationNameLabel;
+@property (nonatomic) bool didUpdateLocationOnce;
 
 - (void) addPins:(float)latitute longitude:(float)longitude adjustView:(BOOL)adjustView;
 
@@ -38,7 +39,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self setupMapView];
     
     self.locationNameLabel.backgroundColor = (UIColorFromRGB(0x517fa4));
@@ -98,6 +98,7 @@
     // Use one or the other, not both. Depending on what you put in info.plist
     [self.locationManager requestWhenInUseAuthorization];
     
+    self.didUpdateLocationOnce = NO;
     [self.locationManager startUpdatingLocation];
     
     self.mapView.delegate = self;
@@ -111,13 +112,16 @@
 #pragma mark - map view delegates
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-//    NSLog(@"didUpdateUserLocation");
-    [self removeAllPinsButUserLocation];
-    MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 80, 80);
-    [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
-    //[self addPins:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude adjustView:YES];
-    
-    [self.locationManager stopUpdatingLocation];
+    if (!self.didUpdateLocationOnce) {
+        NSLog(@"didUpdateUserLocation");
+        [self removeAllPinsButUserLocation];
+        MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 80, 80);
+        [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
+        //[self addPins:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude adjustView:YES];
+        
+        [self.locationManager stopUpdatingLocation];
+        self.didUpdateLocationOnce = YES;
+    }
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
