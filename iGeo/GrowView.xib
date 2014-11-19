@@ -21,7 +21,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="382" height="66"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NIx-y7-Zic">
-                            <rect key="frame" x="170" y="22" width="42" height="21"/>
+                            <rect key="frame" x="20" y="22" width="342" height="21"/>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
@@ -30,10 +30,17 @@
                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     <color key="tintColor" cocoaTouchSystemColor="tableCellGroupedBackgroundColor"/>
                     <constraints>
+                        <constraint firstItem="NIx-y7-Zic" firstAttribute="leading" secondItem="DUc-G5-Tsi" secondAttribute="leading" constant="20" id="0v5-vA-dVa"/>
                         <constraint firstAttribute="centerX" secondItem="NIx-y7-Zic" secondAttribute="centerX" id="Asr-5X-ZXE"/>
+                        <constraint firstAttribute="trailing" secondItem="NIx-y7-Zic" secondAttribute="trailing" constant="20" id="K4i-KE-7yP"/>
                         <constraint firstAttribute="height" constant="66" id="Z3N-k1-xFa"/>
                         <constraint firstItem="NIx-y7-Zic" firstAttribute="top" secondItem="DUc-G5-Tsi" secondAttribute="top" constant="22" id="kRH-oW-Yya"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="0v5-vA-dVa"/>
+                        </mask>
+                    </variation>
                 </view>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Kc9-CH-7FB">
                     <rect key="frame" x="0.0" y="66" width="382" height="435"/>

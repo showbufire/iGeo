@@ -9,6 +9,7 @@
 #import "IGImageCellView.h"
 #import <UIImageView+AFNetworking.h>
 #import <NSDate+DateTools.h>
+#import "Common.h"
 
 @interface IGImageCellView ()
 
@@ -34,6 +35,7 @@
     [l setCornerRadius:25.0];
     
     self.usernameLabel.text = self.igImage.user.username;
+    self.usernameLabel.textColor = UIColoriGeoDefault;
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.igImage.createdTime];
     self.timestampLabel.text = date.timeAgoSinceNow;
 

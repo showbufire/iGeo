@@ -22,7 +22,7 @@
     // Do any additional setup after loading the view from its nib.
     
     self.navigationItem.title = self.locationName;
-    self.navigationController.navigationBar.barTintColor = (UIColorFromRGB(0x517fa4));
+    self.navigationController.navigationBar.barTintColor = UIColoriGeoDefault;
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     
