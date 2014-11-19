@@ -41,6 +41,7 @@
 
     UIImage *placeholder = [self getPlaceholderImage];
     [self.imgView setImageWithURL:self.igImage.imageURL placeholderImage:placeholder];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
 }
 
 - (UIImage *)getPlaceholderImage {
