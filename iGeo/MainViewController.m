@@ -194,6 +194,12 @@
     if ([an isKindOfClass:[Annotation class]])
     {
         NSLog(@"Location %@ got selected", an.location.name);
+        
+        [UIView animateWithDuration:0.1 animations:^{
+            view.transform = CGAffineTransformScale(view.transform, 1.2, 1.2);
+            MKPinAnnotationView *pinView = (MKPinAnnotationView *)view;
+            pinView.pinColor = MKPinAnnotationColorGreen;
+        }];
         self.selectedView = (MKPinAnnotationView *)view;
         
         [[InstagramClient sharedInstance] recentMediaOfLocation:an.location.lid completion:^(NSArray *media, NSError *error) {
@@ -216,6 +222,17 @@
         }];
     }
     
+}
+
+- (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
+    Annotation *an = (Annotation *)view.annotation;
+    if ([an isKindOfClass:[Annotation class]]) {
+        [UIView animateWithDuration:0.1 animations:^{
+            view.transform = CGAffineTransformScale(view.transform, 1.0/1.2, 1.0/1.2);
+            MKPinAnnotationView *pinView = (MKPinAnnotationView *)view;
+            pinView.pinColor = MKPinAnnotationColorRed;
+        }];
+    }
 }
 
 - (void)mapView:(MKMapView *)mapView regionDidChangeAnimated:(BOOL)animated {
