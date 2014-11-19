@@ -6,6 +6,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
             <connections>
+                <outlet property="locationNameLabel" destination="Krl-Kq-9ww" id="FrG-KT-61C"/>
                 <outlet property="mapView" destination="qJ5-bA-hRH" id="qE7-h4-cU4"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -16,17 +17,38 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qJ5-bA-hRH">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="592"/>
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                 </mapView>
+                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="San Francisco, California" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Krl-Kq-9ww">
+                    <rect key="frame" x="0.0" y="526" width="600" height="74"/>
+                    <gestureRecognizers/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="74" id="4Y4-re-dJq"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                    <color key="textColor" red="0.99403700350000002" green="1" blue="0.99812418540000003" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="JG5-eF-5Jj" appends="YES" id="fqk-dI-ewA"/>
+                    </connections>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="qJ5-bA-hRH" secondAttribute="trailing" id="4aI-29-0NS"/>
                 <constraint firstItem="qJ5-bA-hRH" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="CsD-g6-Cqa"/>
-                <constraint firstAttribute="bottom" secondItem="qJ5-bA-hRH" secondAttribute="bottom" constant="8" id="JfT-6T-05q"/>
+                <constraint firstAttribute="trailing" secondItem="Krl-Kq-9ww" secondAttribute="trailing" id="EPp-5w-UbC"/>
+                <constraint firstAttribute="bottom" secondItem="Krl-Kq-9ww" secondAttribute="bottom" id="HwW-iq-jUJ"/>
+                <constraint firstAttribute="bottom" secondItem="qJ5-bA-hRH" secondAttribute="bottom" id="JfT-6T-05q"/>
                 <constraint firstItem="qJ5-bA-hRH" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="YnK-mh-ykO"/>
+                <constraint firstItem="Krl-Kq-9ww" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="sO4-f3-lAf"/>
             </constraints>
-            <point key="canvasLocation" x="448" y="188"/>
+            <point key="canvasLocation" x="608" y="171"/>
         </view>
+        <tapGestureRecognizer id="JG5-eF-5Jj">
+            <connections>
+                <action selector="onTap:" destination="-1" id="OYK-ZJ-aAz"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
 </document>

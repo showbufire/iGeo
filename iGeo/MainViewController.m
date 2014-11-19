@@ -15,6 +15,7 @@
 #import "IGImage.h"
 #import "LocationDetailViewController.h"
 #import "GrowView.h"
+#import "Common.h"
 
 @interface MainViewController () <MKMapViewDelegate, CLLocationManagerDelegate, UIPageViewControllerDelegate>
 
@@ -26,6 +27,7 @@
 @property(nonatomic, assign) MKCoordinateRegion currentRegion;
 @property(nonatomic, strong) GrowView *growView;
 @property(nonatomic) CGPoint panStartingLocation;
+@property (weak, nonatomic) IBOutlet UILabel *locationNameLabel;
 
 - (void) addPins:(float)latitute longitude:(float)longitude adjustView:(BOOL)adjustView;
 
@@ -33,10 +35,14 @@
 
 @implementation MainViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self setupMapView];
+    
+    self.locationNameLabel.backgroundColor = (UIColorFromRGB(0x517fa4));
+    self.locationNameLabel.hidden = YES;
     
     //lat=48.858844&lng=2.294351
     //[self addPins:48.858844 longitude:2.294351 adjustView:YES];
@@ -211,8 +217,10 @@
         frame.origin.y = frame.size.height - 66;
         [self.growView removeFromSuperview];
         self.growView = [[GrowView alloc] initWithFrame:frame];
-        [self.view addSubview:self.growView];
+        //[self.view addSubview:self.growView];
         [self.growView setLocationName:an.location.name];
+        self.locationNameLabel.text = an.location.name;
+        self.locationNameLabel.hidden = NO;
         
         [[InstagramClient sharedInstance] recentMediaOfLocation:an.location.lid completion:^(NSArray *media, NSError *error) {
             if (error == nil) {
@@ -254,6 +262,7 @@
             view.transform = CGAffineTransformScale(view.transform, 1.0/1.2, 1.0/1.2);
             MKPinAnnotationView *pinView = (MKPinAnnotationView *)view;
             pinView.pinColor = MKPinAnnotationColorRed;
+            self.locationNameLabel.hidden = YES;
         }];
     }
 }
@@ -344,6 +353,11 @@
         ldvc.locationName = self.selectedLocation.name;
         [self presentViewController:nvc animated:YES completion:nil];
     }
+}
+
+- (IBAction)onTap:(UITapGestureRecognizer *)sender {
+    NSLog(@"onTap got called");
+    [self showDetails:sender];
 }
 
 - (void)handleDrag:(UIPanGestureRecognizer *)gestureRecognizer {
