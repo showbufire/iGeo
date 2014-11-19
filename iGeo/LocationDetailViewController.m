@@ -8,6 +8,7 @@
 
 #import "LocationDetailViewController.h"
 #import "IGImageCellView.h"
+#import "Common.h"
 
 @interface LocationDetailViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -21,6 +22,9 @@
     // Do any additional setup after loading the view from its nib.
     
     self.navigationItem.title = self.locationName;
+    self.navigationController.navigationBar.barTintColor = (UIColorFromRGB(0x517fa4));
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
     
     self.tableView.dataSource = self;
     [self.tableView registerNib:[UINib nibWithNibName:@"IGImageCellView" bundle:nil] forCellReuseIdentifier:@"IGImageCellView"];
@@ -28,7 +32,8 @@
     
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(onBackButton)];
     
-    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+//    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:CGRectZero];
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
 - (void) onBackButton {

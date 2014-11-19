@@ -14,6 +14,7 @@
 #import "Location.h"
 #import "IGImage.h"
 #import "LocationDetailViewController.h"
+#import "GrowView.h"
 
 @interface MainViewController () <MKMapViewDelegate, CLLocationManagerDelegate, UIPageViewControllerDelegate>
 
@@ -23,6 +24,8 @@
 @property(nonatomic, strong) NSArray *mediaToShow;
 @property(nonatomic, strong) Location *selectedLocation;
 @property(nonatomic, assign) MKCoordinateRegion currentRegion;
+@property(nonatomic, strong) GrowView *growView;
+@property(nonatomic) CGPoint panStartingLocation;
 
 - (void) addPins:(float)latitute longitude:(float)longitude adjustView:(BOOL)adjustView;
 
@@ -66,7 +69,7 @@
                 self.currentRegion = [self.mapView region];
             }
         } else {
-            NSLog(@"Could not get locations %@", error);
+           // NSLog(@"Could not get locations %@", error);
         }
     }];
 }
@@ -102,7 +105,7 @@
 #pragma mark - map view delegates
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
-    NSLog(@"didUpdateUserLocation");
+//    NSLog(@"didUpdateUserLocation");
     [self removeAllPinsButUserLocation];
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 80, 80);
     [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
@@ -115,8 +118,9 @@
     //NSLog(@"title: %f", an.coordinate.latitude);
     // If the annotation is the user location, just return nil.
     
-    if ([annotation isKindOfClass:[MKUserLocation class]])
+    if ([annotation isKindOfClass:[MKUserLocation class]]) {
         return nil;
+    }
     
     // Handle any custom annotations.
     if ([annotation isKindOfClass:[Annotation class]])
@@ -131,13 +135,14 @@
             pinView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:@"AnnotationView"];
             pinView.pinColor = MKPinAnnotationColorRed;
             pinView.animatesDrop = NO;
-            pinView.canShowCallout = YES;
+            pinView.canShowCallout = NO;
             
             // If appropriate, customize the callout by adding accessory views (code not shown).
             
         }
-        else
+        else {
             pinView.annotation = annotation;
+        }
         
         // Because this is an iOS app, add the detail disclosure button to display details about the annotation in another view.
         UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
@@ -159,7 +164,7 @@
 
 - (void)mapView:(MKMapView *)mapView didAddAnnotationViews:(NSArray *)annotationViews
 {
-    NSLog(@"didAddAnnotationViews");
+//    NSLog(@"didAddAnnotationViews");
     NSTimeInterval delayInterval = 0;
     
     for (MKAnnotationView *annView in annotationViews)
@@ -180,7 +185,7 @@
 }
 
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view NS_AVAILABLE(10_9, 4_0) {
-    NSLog(@"selected annotation view");
+//    NSLog(@"selected annotation view");
     
     Annotation *an = (Annotation *)view.annotation;
     
@@ -193,7 +198,7 @@
     // Handle any custom annotations.
     if ([an isKindOfClass:[Annotation class]])
     {
-        NSLog(@"Location %@ got selected", an.location.name);
+//        NSLog(@"Location %@ got selected", an.location.name);
         
         [UIView animateWithDuration:0.1 animations:^{
             view.transform = CGAffineTransformScale(view.transform, 1.2, 1.2);
@@ -202,9 +207,16 @@
         }];
         self.selectedView = (MKPinAnnotationView *)view;
         
+        CGRect frame = self.view.bounds;
+        frame.origin.y = frame.size.height - 66;
+        [self.growView removeFromSuperview];
+        self.growView = [[GrowView alloc] initWithFrame:frame];
+        [self.view addSubview:self.growView];
+        [self.growView setLocationName:an.location.name];
+        
         [[InstagramClient sharedInstance] recentMediaOfLocation:an.location.lid completion:^(NSArray *media, NSError *error) {
             if (error == nil) {
-                NSLog(@"Successfully got media for location %ld", an.location.lid);
+//                NSLog(@"Successfully got media for location %ld", an.location.lid);
                 
                 self.mediaToShow = media;
                 if (media.count > 0) {
@@ -213,15 +225,26 @@
                     self.selectedView.rightCalloutAccessoryView.hidden = YES;
                     //self.selectedView.callout
                 }
+                if (media) {
+                    [self.growView updateMedia:media];
+                    self.growView.userInteractionEnabled = YES;
+                    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(onTapGrowView:)];
+                    [self.growView addGestureRecognizer:tapGesture];
+
+                }
                 
                 //NSLog(@"selected media: %@", media);
                 
             } else {
-                NSLog(@"Could not get media for location %ld", an.location.lid);
+//                NSLog(@"Could not get media for location %ld", an.location.lid);
             }
         }];
     }
     
+}
+
+- (IBAction)onTapGrowView:(UIPanGestureRecognizer *)sender {
+    [self showDetails:sender];
 }
 
 - (void)mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view {
@@ -245,16 +268,16 @@
     self.currentRegion = [self.mapView region];
     
     if (region.span.latitudeDelta > 10) {
-        NSLog(@"Too above the ground. Doesn't make sense to show locations");
+//        NSLog(@"Too above the ground. Doesn't make sense to show locations");
         return;
     }
     
-    NSLog(@"%f %f %f %f", fabs(oldCenter.coordinate.latitude - newCenter.coordinate.latitude), region.span.latitudeDelta / 2, fabsf(oldCenter.coordinate.longitude - newCenter.coordinate.longitude), region.span.longitudeDelta / 2);
+//    NSLog(@"%f %f %f %f", fabs(oldCenter.coordinate.latitude - newCenter.coordinate.latitude), region.span.latitudeDelta / 2, fabsf(oldCenter.coordinate.longitude - newCenter.coordinate.longitude), region.span.longitudeDelta / 2);
     if (fabsf(oldCenter.coordinate.latitude - newCenter.coordinate.latitude) > region.span.latitudeDelta / 4 || fabsf(oldCenter.coordinate.longitude - newCenter.coordinate.longitude) > region.span.longitudeDelta / 4) {
-        NSLog(@"Center moved enough");
+//        NSLog(@"Center moved enough");
         [self addPins:region.center.latitude longitude:region.center.longitude adjustView:NO];
     } else {
-        NSLog(@"Center did not move enough");
+//        NSLog(@"Center did not move enough");
     }
     
     
@@ -268,7 +291,7 @@
 {
     NSArray *annotations = mapView.annotations;
     NSUInteger count = [mapView.annotations count];
-    NSLog(@"#annotations: %ld", count);
+//    NSLog(@"#annotations: %ld", count);
     if ( count == 0) { return; } //bail if no annotations
     
     
@@ -306,14 +329,14 @@
 }
 
 - (void)onTapShowDetails:(int)tag sender:(id)sender {
-    UIButton *button = (UIButton *)sender;
-    NSLog(@"showDetails tag: %ld", button.tag);
+//    UIButton *button = (UIButton *)sender;
+//    NSLog(@"showDetails tag: %ld", button.tag);
 }
 
 - (void)showDetails:(id)sender {
     if (self.mediaToShow.count > 0) {
-        UIButton *button = (UIButton *)sender;
-        NSLog(@"showDetails tag: %ld", button.tag);
+//        UIButton *button = (UIButton *)sender;
+//        NSLog(@"showDetails tag: %ld", button.tag);
         
         LocationDetailViewController *ldvc = [[LocationDetailViewController alloc] init];
         UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:ldvc];
@@ -325,10 +348,9 @@
 
 - (void)handleDrag:(UIPanGestureRecognizer *)gestureRecognizer {
     
-    NSLog(@"handleDrag got called");
+//    NSLog(@"handleDrag got called");
     if (gestureRecognizer.state != UIGestureRecognizerStateEnded)
         return;
-    
     
 }
 
