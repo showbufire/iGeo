@@ -116,6 +116,8 @@
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 80, 80);
     [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
     //[self addPins:userLocation.coordinate.latitude longitude:userLocation.coordinate.longitude adjustView:YES];
+    
+    [self.locationManager stopUpdatingLocation];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)mapView viewForAnnotation:(id <MKAnnotation>)annotation
@@ -209,7 +211,7 @@
         [UIView animateWithDuration:0.1 animations:^{
             view.transform = CGAffineTransformScale(view.transform, 1.2, 1.2);
             MKPinAnnotationView *pinView = (MKPinAnnotationView *)view;
-            pinView.pinColor = MKPinAnnotationColorGreen;
+            pinView.pinColor = MKPinAnnotationColorPurple;
         }];
         self.selectedView = (MKPinAnnotationView *)view;
         
