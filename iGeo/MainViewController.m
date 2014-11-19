@@ -47,11 +47,11 @@
 - (void) addPins:(float)latitute longitude:(float)longitude adjustView:(BOOL)adjustView {
     [[InstagramClient sharedInstance] searchLocationsByCoordinate:latitute longtitude:longitude completion:^(NSArray *locations, NSError *error) {
         if (error == nil) {
-            NSLog(@"Successfully got the locations %@ ", locations);
+            //NSLog(@"Successfully got the locations %@ ", locations);
             
             for (Location *location in locations) {
                 // Add an annotation for each location
-                NSLog(@"%@ %f %f", location.name, location.latitude, location.longtitude);
+                //NSLog(@"%@ %f %f", location.name, location.latitude, location.longtitude);
                 CLLocationCoordinate2D point;
                 point.latitude = location.latitude;
                 point.longitude = location.longtitude;
@@ -102,6 +102,7 @@
 #pragma mark - map view delegates
 - (void)mapView:(MKMapView *)mapView didUpdateUserLocation:(MKUserLocation *)userLocation
 {
+    NSLog(@"didUpdateUserLocation");
     [self removeAllPinsButUserLocation];
     MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(userLocation.coordinate, 80, 80);
     [self.mapView setRegion:[self.mapView regionThatFits:region] animated:YES];
@@ -165,15 +166,16 @@
     {
         CGRect endFrame = annView.frame;
         
-        annView.frame = CGRectOffset(endFrame, 0, -500);
+        //annView.frame = CGRectOffset(endFrame, 0, -500);
+        annView.alpha = 0;
         
-        [UIView animateWithDuration:0.8
+        [UIView animateWithDuration:0.6
                               delay:delayInterval
                             options:UIViewAnimationOptionAllowUserInteraction
-                         animations:^{ annView.frame = endFrame; }
+                         animations:^{ annView.frame = endFrame; annView.alpha = 1;}
                          completion:NULL];
         
-        delayInterval += 0.3;
+        delayInterval += 0.1;
     }
 }
 
@@ -198,14 +200,15 @@
             if (error == nil) {
                 NSLog(@"Successfully got media for location %ld", an.location.lid);
                 
+                self.mediaToShow = media;
                 if (media.count > 0) {
-                    self.mediaToShow = media;
                     self.selectedLocation = an.location;
                 } else {
                     self.selectedView.rightCalloutAccessoryView.hidden = YES;
+                    //self.selectedView.callout
                 }
                 
-                NSLog(@"selected media: %@", media);
+                //NSLog(@"selected media: %@", media);
                 
             } else {
                 NSLog(@"Could not get media for location %ld", an.location.lid);
@@ -284,14 +287,16 @@
 }
 
 - (void)showDetails:(id)sender {
-    UIButton *button = (UIButton *)sender;
-    NSLog(@"showDetails tag: %ld", button.tag);
-    
-    LocationDetailViewController *ldvc = [[LocationDetailViewController alloc] init];
-    UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:ldvc];
-    ldvc.medias = self.mediaToShow;
-    ldvc.locationName = self.selectedLocation.name;
-    [self presentViewController:nvc animated:YES completion:nil];
+    if (self.mediaToShow.count > 0) {
+        UIButton *button = (UIButton *)sender;
+        NSLog(@"showDetails tag: %ld", button.tag);
+        
+        LocationDetailViewController *ldvc = [[LocationDetailViewController alloc] init];
+        UINavigationController *nvc = [[UINavigationController alloc] initWithRootViewController:ldvc];
+        ldvc.medias = self.mediaToShow;
+        ldvc.locationName = self.selectedLocation.name;
+        [self presentViewController:nvc animated:YES completion:nil];
+    }
 }
 
 - (void)handleDrag:(UIPanGestureRecognizer *)gestureRecognizer {
