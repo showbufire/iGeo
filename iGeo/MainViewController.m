@@ -225,7 +225,14 @@
     CLLocation *oldCenter = [[CLLocation alloc] initWithLatitude:self.currentRegion.center.latitude longitude:self.currentRegion.center.longitude];
     CLLocation *newCenter = [[CLLocation alloc] initWithLatitude:region.center.latitude longitude:region.center.longitude];
     
-    //NSLog(@"%f %f %f %f", fabs(oldCenter.coordinate.latitude - newCenter.coordinate.latitude), region.span.latitudeDelta / 2, fabsf(oldCenter.coordinate.longitude - newCenter.coordinate.longitude), region.span.longitudeDelta / 2);
+    self.currentRegion = [self.mapView region];
+    
+    if (region.span.latitudeDelta > 10) {
+        NSLog(@"Too above the ground. Doesn't make sense to show locations");
+        return;
+    }
+    
+    NSLog(@"%f %f %f %f", fabs(oldCenter.coordinate.latitude - newCenter.coordinate.latitude), region.span.latitudeDelta / 2, fabsf(oldCenter.coordinate.longitude - newCenter.coordinate.longitude), region.span.longitudeDelta / 2);
     if (fabsf(oldCenter.coordinate.latitude - newCenter.coordinate.latitude) > region.span.latitudeDelta / 4 || fabsf(oldCenter.coordinate.longitude - newCenter.coordinate.longitude) > region.span.longitudeDelta / 4) {
         NSLog(@"Center moved enough");
         [self addPins:region.center.latitude longitude:region.center.longitude adjustView:NO];
@@ -233,7 +240,7 @@
         NSLog(@"Center did not move enough");
     }
     
-    self.currentRegion = [self.mapView region];
+    
 }
 
 #define MINIMUM_ZOOM_ARC 0.014 //approximately 1 miles (1 degree of arc ~= 69 miles)
